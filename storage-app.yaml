@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storage-app
+  template:
+    metadata:
+      labels:
+        app: storage-app
+    spec:
+      containers:
+        - name: app
+          image: quay.io/libpod/alpine_labels:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "while true; do date >> /data/log.txt; sleep 10; done",
+            ]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-pvc

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: quota-test-fixed
+spec:
+  containers:
+    - name: quota-test
+      image: quay.io/libpod/alpine_labels
+      command: ["/bin/sh"]
+      args: ["-c", "while true; do echo hello; sleep 5; done"]
